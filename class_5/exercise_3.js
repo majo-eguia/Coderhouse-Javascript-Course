@@ -10,3 +10,27 @@ Luego invocar al menos un (1) objeto usando esta clase, y solicitar al usuario t
    El if debe verificar dos intervalos válidos.
 
    */
+
+class Tienda {
+  constructor(nombre, direccion, propietario, rubro) {
+    this.nombre = nombre;
+    this.direccion = direccion;
+    this.propietario = propietario;
+    this.rubro = rubro;
+  }
+  estaAbierto(hora) {
+    if ((hora >= 8 && hora <= 12) || (hora >= 15 && hora <= 19)) {
+      return true;
+    }
+    return false;
+  }
+}
+const tienda4 = new Tienda("33 cents Store", "Cheap 231", "Barato SRL", "Ropa");
+for (let i = 0; i < 3; i++) {
+  let entrada = parseInt(prompt("INGRESAR HORA EN PUNTO"));
+  if (tienda4.estaAbierto(entrada)) {
+    alert("LA TIENDA ESTA ABIERTA A LAS " + entrada);
+  } else {
+    alert("LA TIENDA ESTA CERRADA A LAS " + entrada);
+  }
+}
