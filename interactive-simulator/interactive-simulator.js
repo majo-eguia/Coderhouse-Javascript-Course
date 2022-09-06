@@ -1,98 +1,142 @@
 /*
 Desarrollar un juego de rondas que le permita al participante adivinar la banda que
-compuso una canción, esto dandole al participante un parrafo de la cancion
-que debe adivinar. Asi sucesivamente con varias canciones y bandas. Por cada ronda
-el participante tendrá hasta 3 vidas y cada vez que lo intente y sea erroneo
-perdera una vida. Cuando llegue a cero vidas  o cuando haya adivinado todas
-las rondas se acaba el juego.
-Cada vez que acierte sumara una cierta suma de dinero, la cual al finalizado el juego podra
-canjear por distintos premios de diferente valor, o elegir quedarse con el dinero.
+compuso una canción a través de un fragmento de la misma.
+Así sucesivamente con varias canciones, las cuales puede ser de diferentes bandas.
 
+Por cada ronda, el participante tendrá hasta 3 intentos para adivinar la canción.
+El juego termina cuando:
+- Logra adivina la banda en todas las rondas, y por lo tanto, gana
+- Agota los 3 intentos en una ronda, y por lo tanto, pierde
+
+
+En la siguiente iteración del juego:
+
+Cada vez que acierte, el participante sumará una cierta suma de dinero, la cual, una vez finalizado el juego, podrá
+canjear por distintos premios de diferente valor, o elegir quedarse con el dinero.
 */
 
-class Cancion {
-  constructor(nombre, autor, año) {
-    this.nombre = nombre;
-    this.autor = autor;
-    this.genero = genero;
-    this.año = año;
+class FragmentoDeCancion {
+  constructor(letra, nombreDeLaCancion, nombreDeLaBanda) {
+    this.letra = letra;
+    this.nombreDeLaCancion = nombreDeLaCancion;
+    this.nombreDeLaBanda = nombreDeLaBanda;
   }
 }
 
-const cancion1 = new Cancion("The show must go on", "Queen", "Rock", 1991);
-const cancion2 = new Cancion("I want it all", "Queen", "Rock", 1989);
-const cancion3 = new Cancion(
+const fragmentoDeCancion1 = new FragmentoDeCancion(
+  "Inside my heart is breaking\nMy makeup may be flaking\nBut my smile, still, stays on",
+  "The show must go on",
+  "Queen"
+);
+
+const fragmentoDeCancion2 = new FragmentoDeCancion(
+  "Listen all you people, come gather round\nI gotta get me a game plan, gotta shake you to the ground\nBut just give me, huh, what I know is mine\nPeople do you hear me, just gimme the sign",
+  "I want it all",
+  "Queen"
+);
+
+const fragmentoDeCancion3 = new FragmentoDeCancion(
+  "Solo como un pájaro que vuela en la noche\nLibre de vos, pero no de mí\nVacío como el sueño de una gorra lleno de nada\nSin saber donde ir",
   "Una nueva noche fria",
-  "Callejeros",
-  "Rock Nacional",
-  2003
+  "Callejeros"
 );
-const cancion4 = new Cancion("Creo", "Callejeros", "Rock Nacional", 2006);
-const cancion5 = new Cancion(
+
+const fragmentoDeCancion4 = new FragmentoDeCancion(
+  "Creo en tu sonrisa\nCreo en mí si te veo hoy\nY me pedis que no me rinda\nSigo por vos",
+  "Creo",
+  "Callejeros"
+);
+
+const fragmentoDeCancion5 = new FragmentoDeCancion(
+  "La vida lo educó a los bastonazos\ny a veces la muerte también,\ntuvo como profesor a un diablo bien pirata que\nle enseñó que la vida no siempre es ganar.",
   "Enano",
-  "Las pastillas del abuelo",
-  "Rock Nacional",
-  2006
+  "Las pastillas del abuelo"
 );
 
-const cancion6 = new Cancion(
+const fragmentoDeCancion6 = new FragmentoDeCancion(
+  "Y si vos me preguntas hoy qué carajo es el amor\nYo te contesto: miralos a ellos dos\nY si vos me preguntas hoy qué carajo es el amor\nYo te contesto: miralos a ellos dos",
   "¿Qué carajo es el amor?",
-  "Las pastillas del abuelo",
-  "Rock Nacional",
-  2008
+  "Las pastillas del abuelo"
 );
 
-const cancion7 = new Cancion("Let it Be", "The Beatles", "Rock", 1970);
-const cancion8 = new Cancion("Help", "The Beatles", "Rock", 1965);
+const fragmentoDeCancion7 = new FragmentoDeCancion(
+  "And in my hour of darkness\nShe is standing right in front of me\nSpeaking words of wisdom\nLet it be",
+  "Let it Be",
+  "The Beatles"
+);
 
-const bandas = [
-  "Queen",
-  "Callejeros",
-  "Las pastillas del abuelo",
-  "The Beatles",
+const fragmentoDeCancion8 = new FragmentoDeCancion(
+  "Help me if you can, I'm feeling down\nAnd I do appreciate you being 'round\nHelp me get my feet back on the ground\nWon't you please, please help me",
+  "Help",
+  "The Beatles"
+);
+
+const fragmentoDeCanciones = [
+  fragmentoDeCancion1,
+  fragmentoDeCancion2,
+  fragmentoDeCancion3,
+  fragmentoDeCancion4,
+  fragmentoDeCancion5,
+  fragmentoDeCancion6,
+  fragmentoDeCancion7,
+  fragmentoDeCancion8,
 ];
-const adivinando = bandas.find(
-  (e) => e === prompt("¿Qué banda la compuso?").toLowerCase()
-);
 
-let cantidadDeIntentosRestantes = 3;
-let ganoElJuego = false;
-let leQuedanIntentos = () => cantidadDeIntentosRestantes > 0;
+let leQuedanIntentos = (cantidadDeIntentosRestantes) =>
+  cantidadDeIntentosRestantes > 0;
 
-let presentarLaCancion = () => {
+let presentarLaCancion = (fragmentoDeCancion) => {
   alert("Esta es tu canción a adivinar...");
-  alert(
-    "Inside my heart is breaking\nMy makeup may be flaking\nBut my smile, still, stays on"
-  );
+  alert(fragmentoDeCancion.letra);
 };
 
-let adivinoLaBanda = (nombreDeLaBandaAdivinada) =>
-  nombreDeLaBandaAdivinada === "queen";
+let adivinoLaBanda = (nombreDeLaBandaAdivinada, fragmentoDeCancion) => fragmentoDeCancion.nombreDeLaBanda.toLowerCase() === nombreDeLaBandaAdivinada.toLowerCase();
+
+let notificarQueAdivino = (fragmentoDeCancion, numeroDeRonda) => {
+  alert(
+    "Correcto, la canción es " +
+      fragmentoDeCancion.nombreDeLaCancion +
+      ", de la banda " +
+      fragmentoDeCancion.nombreDeLaBanda +
+      ". Pasaste la ronda " +
+      (numeroDeRonda + 1) +
+      "."
+  );
+};
 
 // Inicia el juego
 
 alert(
-  "Esto es 'Conozco esa voz', el juego donde si adivinas la banda que compuso la canción, ganarás un millón de dólares. ¿Empezamos?"
+  "Esto es 'Conozco esa voz', el juego donde si adivinas la banda que compuso la canción, ganarás cien mil pesos. ¿Empezamos?"
 );
 
-while (leQuedanIntentos() && !ganoElJuego) {
-  presentarLaCancion();
-  let nombreDeLaBandaAdivinada = prompt("¿Qué banda la compuso?").toLowerCase();
-  if (adivinoLaBanda(nombreDeLaBandaAdivinada)) {
-    ganoElJuego = true;
-  } else {
-    cantidadDeIntentosRestantes--;
-    if (leQuedanIntentos()) {
-      alert(
-        "Fallaste, pero no te rindas. Intentos restantes: " +
-          cantidadDeIntentosRestantes
-      );
+let adivinoLaCancionEnLaRonda = (fragmentoDeCancion, numeroDeRonda) => {
+  let cantidadDeIntentosRestantes = 3;
+  let ganoLaRonda = false;
+  while (leQuedanIntentos(cantidadDeIntentosRestantes) && !ganoLaRonda) {
+    presentarLaCancion(fragmentoDeCancion);
+    const nombreDeLaBandaAdivinada = prompt("¿Qué banda la compuso?");
+    if (adivinoLaBanda(nombreDeLaBandaAdivinada, fragmentoDeCancion)) {
+      ganoLaRonda = true;
+      notificarQueAdivino(fragmentoDeCancion, numeroDeRonda);
+    } else {
+      cantidadDeIntentosRestantes--;
+      if (leQuedanIntentos(cantidadDeIntentosRestantes)) {
+        alert(
+          "Fallaste, pero no te rindas. Intentos restantes: " +
+            cantidadDeIntentosRestantes
+        );
+      }
     }
   }
-}
+
+  return ganoLaRonda;
+};
+
+const ganoElJuego = fragmentoDeCanciones.every(adivinoLaCancionEnLaRonda);
 
 if (ganoElJuego) {
-  alert("Felicitaciones, adivinaste la primer banda! Ganaste cien mil pesos!");
+  alert("Felicitaciones, ganaste el juego! Ganaste cien mil pesos!");
 } else {
-  alert("Ya no tienes más intentos. Mejor suerte la próxima!");
+  alert("Que lástima, perdiste el juego. Mejor suerte la próxima!");
 }
