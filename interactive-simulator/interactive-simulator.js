@@ -21,6 +21,10 @@ class FragmentoDeCancion {
     this.nombreDeLaCancion = nombreDeLaCancion;
     this.nombreDeLaBanda = nombreDeLaBanda;
   }
+
+  fueCompuestaPorLaBandaLlamada(nombreDeLaBanda){
+    return this.nombreDeLaBanda.toLowerCase() === nombreDeLaBanda.toLowerCase()
+  }
 }
 
 const fragmentoDeCancion1 = new FragmentoDeCancion(
@@ -90,7 +94,7 @@ let presentarLaCancion = (fragmentoDeCancion) => {
   alert(fragmentoDeCancion.letra);
 };
 
-let adivinoLaBanda = (nombreDeLaBandaAdivinada, fragmentoDeCancion) => fragmentoDeCancion.nombreDeLaBanda.toLowerCase() === nombreDeLaBandaAdivinada.toLowerCase();
+let adivinoLaBanda = (nombreDeLaBandaAdivinada, fragmentoDeCancion) => fragmentoDeCancion.fueCompuestaPorLaBandaLlamada(nombreDeLaBandaAdivinada);
 
 let notificarQueAdivino = (fragmentoDeCancion, numeroDeRonda) => {
   alert(
