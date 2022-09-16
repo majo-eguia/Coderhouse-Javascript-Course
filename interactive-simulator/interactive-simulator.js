@@ -31,44 +31,58 @@ class Juego {
   constructor(fragmentoDeCanciones, notificador) {
     this.fragmentoDeCanciones = fragmentoDeCanciones;
     this.notificador = notificador;
-  }
-
-  adivinoLaBandaEnLaRonda(fragmentoDeCancion, indiceDeRonda) {
-    const ronda = new Ronda(this, fragmentoDeCancion, indiceDeRonda + 1);
-    ronda.jugar();
-    return ronda.fueGanada;
+    this.numeroDeRonda = 1;
+    this.fuePerdido = false;
   }
 
   presentar(fragmentoDeCancion) {
     this.notificador.presentar(fragmentoDeCancion);
   }
 
+  conElNombreDeLaBandaAdivinada(funcion) {
+    this.notificador.conElNombreDeLaBandaAdivinada(funcion);
+  }
+
   pasoLaRonda(ronda) {
     this.notificador.pasoLaRonda(ronda);
+    this.numeroDeRonda++;
+    this.jugar();
+  }
+
+  perdioLaRonda() {
+    this.fuePerdido = true;
+    this.jugar();
   }
 
   noAdivinoYLeQuedan(cantidadDeIntentosRestantes) {
     this.notificador.noAdivinoYLeQuedan(cantidadDeIntentosRestantes);
   }
 
+  quedanRondasPorJugar() {
+    return this.numeroDeRonda <= this.fragmentoDeCanciones.length;
+  }
+
   jugar() {
-    const fueGanado = this.fragmentoDeCanciones.every(
-      (fragmentoDeCancion, indiceDeRonda) =>
-        this.adivinoLaBandaEnLaRonda(fragmentoDeCancion, indiceDeRonda)
-    );
-    if (fueGanado) {
-      this.notificador.seGanoElJuego();
-    } else {
+    if (this.fuePerdido) {
       this.notificador.sePerdioElJuego();
+    } else {
+      if (this.quedanRondasPorJugar()) {
+        const fragmentoDeCancion =
+          this.fragmentoDeCanciones[this.numeroDeRonda - 1];
+        const ronda = new Ronda(this, fragmentoDeCancion, this.numeroDeRonda);
+        ronda.jugar();
+      } else {
+        this.notificador.seGanoElJuego();
+      }
     }
   }
 }
 
 class Ronda {
-  constructor(juego, fragmentoDeCancion, numeroDeRonda) {
+  constructor(juego, fragmentoDeCancion, numero) {
     this.juego = juego;
     this.fragmentoDeCancion = fragmentoDeCancion;
-    this.numeroDeRonda = numeroDeRonda;
+    this.numero = numero;
     this.cantidadDeIntentosRestantes = 3;
     this.fueGanada = false;
   }
@@ -88,20 +102,22 @@ class Ronda {
   }
 
   jugar() {
-    while (this.leQuedanIntentos() && !this.fueGanada) {
+    if (this.leQuedanIntentos() && !this.fueGanada) {
       this.juego.presentar(this.fragmentoDeCancion);
-      const nombreDeLaBandaAdivinada = prompt("¿Qué banda la compuso?");
-      if (
-        this.fueLaCancionCompuestaPorLaBandaLlamada(nombreDeLaBandaAdivinada)
-      ) {
-        this.fueGanada = true;
-        this.juego.pasoLaRonda(this);
-      } else {
-        this.perdioUnIntento();
-        if (this.leQuedanIntentos()) {
-          this.juego.noAdivinoYLeQuedan(this.cantidadDeIntentosRestantes);
+      this.juego.conElNombreDeLaBandaAdivinada((nombreDeLaBanda) => {
+        if (this.fueLaCancionCompuestaPorLaBandaLlamada(nombreDeLaBanda)) {
+          this.fueGanada = true;
+          this.juego.pasoLaRonda(this);
+        } else {
+          this.perdioUnIntento();
+          if (this.leQuedanIntentos()) {
+            this.juego.noAdivinoYLeQuedan(this.cantidadDeIntentosRestantes);
+            this.jugar();
+          } else {
+            this.juego.perdioLaRonda();
+          }
         }
-      }
+      });
     }
   }
 }
@@ -125,9 +141,37 @@ class NotificadorPorDOM {
     this.parrafoDeFragmentoDeCancion.innerText = fragmentoDeCancion.letra;
   }
 
+  conElNombreDeLaBandaAdivinada(funcion) {
+    const formulario = document.createElement("form");
+    formulario.onsubmit = (event) => {
+      event.preventDefault();
+      const datosDelFormulario = Object.fromEntries(new FormData(event.target));
+      formulario.remove();
+      funcion(datosDelFormulario.nombre);
+    };
+
+    const etiqueta = document.createElement("label");
+    etiqueta.setAttribute("for", "nombre");
+    etiqueta.innerText = "¿Qué banda la compuso?";
+
+    const input = document.createElement("input");
+    input.setAttribute("id", "nombre");
+    input.setAttribute("name", "nombre");
+    input.setAttribute("type", "text");
+
+    const boton = document.createElement("button");
+    boton.setAttribute("type", "submit");
+    boton.innerText = "Enviar";
+
+    formulario.appendChild(etiqueta);
+    formulario.appendChild(input);
+    formulario.appendChild(boton);
+    this.main.appendChild(formulario);
+  }
+
   pasoLaRonda(ronda) {
     this.parrafoParaNotificarSiAdivinoLaBanda.style.color = "green";
-    this.parrafoParaNotificarSiAdivinoLaBanda.innerText = `Correcto, la canción es ${ronda.fragmentoDeCancion.nombreDeLaCancion}, de la banda ${ronda.fragmentoDeCancion.nombreDeLaBanda}. Pasaste la ronda ${ronda.numeroDeRonda}.`;
+    this.parrafoParaNotificarSiAdivinoLaBanda.innerText = `Correcto, la canción es ${ronda.fragmentoDeCancion.nombreDeLaCancion}, de la banda ${ronda.fragmentoDeCancion.nombreDeLaBanda}. Pasaste la ronda ${ronda.numero}.`;
   }
 
   noAdivinoYLeQuedan(cantidadDeIntentosRestantes) {
