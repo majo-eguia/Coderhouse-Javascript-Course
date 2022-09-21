@@ -15,19 +15,8 @@ Cada vez que acierte, el participante sumará una cierta suma de dinero, la cual
 canjear por distintos premios de diferente valor, o elegir quedarse con el dinero.
 */
 
+import FragmentoDeCancion from "./fragmento-de-cancion.js";
 import NotificadorPorDOM from "./notificador-por-dom.js";
-
-class FragmentoDeCancion {
-  constructor(letra, nombreDeLaCancion, nombreDeLaBanda) {
-    this.letra = letra;
-    this.nombreDeLaCancion = nombreDeLaCancion;
-    this.nombreDeLaBanda = nombreDeLaBanda;
-  }
-
-  fueCompuestaPorLaBandaLlamada(nombreDeLaBanda) {
-    return this.nombreDeLaBanda.toLowerCase() === nombreDeLaBanda.toLowerCase();
-  }
-}
 
 class Juego {
   constructor(fragmentoDeCanciones, notificador) {
