@@ -19,8 +19,6 @@ import { fragmentoDeCanciones } from "./fragmento-de-canciones.js";
 import Juego from "./juego.js";
 import NotificadorPorDOM from "./notificador-por-dom.js";
 
-// instanciación de fragmentos de canciones
-
 // Inicia el juego
 
 const notificadorPorDOM = new NotificadorPorDOM();
