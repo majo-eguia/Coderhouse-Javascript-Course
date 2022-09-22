@@ -22,5 +22,11 @@ import NotificadorPorDOM from "./notificador-por-dom.js";
 // Inicia el juego
 
 const notificadorPorDOM = new NotificadorPorDOM();
-const juego = new Juego(fragmentoDeCanciones, notificadorPorDOM);
-juego.jugar();
+notificadorPorDOM.conElNombreDelJugador((nombreDelJugador) => {
+  const juego = new Juego(
+    nombreDelJugador,
+    fragmentoDeCanciones,
+    notificadorPorDOM
+  );
+  juego.jugar();
+});

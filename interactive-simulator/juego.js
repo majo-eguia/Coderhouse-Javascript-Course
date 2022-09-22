@@ -1,7 +1,8 @@
 import Ronda from "./ronda.js";
 
 export default class Juego {
-  constructor(fragmentoDeCanciones, notificador) {
+  constructor(nombreDelJugador, fragmentoDeCanciones, notificador) {
+    this.nombreDelJugador = nombreDelJugador;
     this.fragmentoDeCanciones = fragmentoDeCanciones;
     this.notificador = notificador;
     this.numeroDeRonda = 1;
@@ -9,7 +10,7 @@ export default class Juego {
   }
 
   presentar(fragmentoDeCancion) {
-    this.notificador.presentar(fragmentoDeCancion);
+    this.notificador.presentar(this.nombreDelJugador, fragmentoDeCancion);
   }
 
   conElNombreDeLaBandaAdivinada(funcion) {
@@ -37,7 +38,7 @@ export default class Juego {
 
   jugar() {
     if (this.fuePerdido) {
-      this.notificador.sePerdioElJuego();
+      this.notificador.perdioElJuego(this.nombreDelJugador);
     } else {
       if (this.quedanRondasPorJugar()) {
         const fragmentoDeCancion =
@@ -45,7 +46,7 @@ export default class Juego {
         const ronda = new Ronda(this, fragmentoDeCancion, this.numeroDeRonda);
         ronda.jugar();
       } else {
-        this.notificador.seGanoElJuego();
+        this.notificador.ganoElJuego(this.nombreDelJugador);
       }
     }
   }

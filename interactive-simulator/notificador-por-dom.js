@@ -11,9 +11,8 @@ export default class NotificadorPorDOM {
     document.body.appendChild(this.main);
   }
 
-  presentar(fragmentoDeCancion) {
-    this.encabezadoParaPresentarLaCancion.innerText =
-      "Esta es tu canción a adivinar...";
+  presentar(nombreDelJugador, fragmentoDeCancion) {
+    this.encabezadoParaPresentarLaCancion.innerText = `${nombreDelJugador}, esta es tu canción a adivinar...`;
     this.parrafoDeFragmentoDeCancion.innerText = fragmentoDeCancion.letra;
   }
 
@@ -45,6 +44,36 @@ export default class NotificadorPorDOM {
     this.main.appendChild(formulario);
   }
 
+  conElNombreDelJugador(funcion) {
+    const formulario = document.createElement("form");
+    formulario.addEventListener("submit", (event) => {
+      event.preventDefault();
+      // {nombre: 'nombre del jugador'}
+      const datosDelFormulario = Object.fromEntries(new FormData(event.target));
+      formulario.remove();
+      funcion(datosDelFormulario.nombre);
+    });
+
+    const etiqueta = document.createElement("label");
+    etiqueta.setAttribute("for", "nombre");
+    etiqueta.innerText = "Bienvenido, ¿cuál es su nombre?";
+
+    const input = document.createElement("input");
+    input.setAttribute("id", "nombre");
+    input.setAttribute("name", "nombre");
+    input.setAttribute("type", "text");
+
+    const boton = document.createElement("button");
+    boton.setAttribute("type", "submit");
+    boton.innerText = "Enviar";
+
+    formulario.appendChild(etiqueta);
+    formulario.appendChild(input);
+    formulario.appendChild(boton);
+
+    this.main.appendChild(formulario);
+  }
+
   pasoLaRonda(ronda) {
     this.parrafoParaNotificarSiAdivinoLaBanda.style.color = "green";
     this.parrafoParaNotificarSiAdivinoLaBanda.innerText = `Correcto, la canción es ${ronda.fragmentoDeCancion.nombreDeLaCancion}, de la banda ${ronda.fragmentoDeCancion.nombreDeLaBanda}. Pasaste la ronda ${ronda.numero}.`;
@@ -55,16 +84,16 @@ export default class NotificadorPorDOM {
     this.parrafoParaNotificarSiAdivinoLaBanda.innerText = `Fallaste, pero no te rindas. Intentos restantes: ${cantidadDeIntentosRestantes}`;
   }
 
-  seGanoElJuego() {
+  ganoElJuego(nombreDelJugador) {
     this.seTerminoElJuego(
-      "Felicitaciones, ganaste el juego! Ganaste cien mil pesos!",
+      `Felicitaciones ${nombreDelJugador}, ganaste el juego! Ganaste cien mil pesos!`,
       "green"
     );
   }
 
-  sePerdioElJuego() {
+  perdioElJuego(nombreDelJugador) {
     this.seTerminoElJuego(
-      "Que lástima, perdiste el juego. Mejor suerte la próxima!",
+      `Que lástima, ${nombreDelJugador}, perdiste el juego. Mejor suerte la próxima!`,
       "red"
     );
   }
