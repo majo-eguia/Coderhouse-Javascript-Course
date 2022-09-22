@@ -21,23 +21,27 @@ export default class Ronda {
     this.cantidadDeIntentosRestantes--;
   }
 
+  jugarAdivinando(nombreDeLaBanda) {
+    if (this.fueLaCancionCompuestaPorLaBandaLlamada(nombreDeLaBanda)) {
+      this.fueGanada = true;
+      this.juego.pasoLaRonda(this);
+    } else {
+      this.perdioUnIntento();
+      if (this.leQuedanIntentos()) {
+        this.juego.noAdivinoYLeQuedan(this.cantidadDeIntentosRestantes);
+        this.jugar();
+      } else {
+        this.juego.perdioLaRonda();
+      }
+    }
+  }
+
   jugar() {
     if (this.leQuedanIntentos() && !this.fueGanada) {
       this.juego.presentar(this.fragmentoDeCancion);
-      this.juego.conElNombreDeLaBandaAdivinada((nombreDeLaBanda) => {
-        if (this.fueLaCancionCompuestaPorLaBandaLlamada(nombreDeLaBanda)) {
-          this.fueGanada = true;
-          this.juego.pasoLaRonda(this);
-        } else {
-          this.perdioUnIntento();
-          if (this.leQuedanIntentos()) {
-            this.juego.noAdivinoYLeQuedan(this.cantidadDeIntentosRestantes);
-            this.jugar();
-          } else {
-            this.juego.perdioLaRonda();
-          }
-        }
-      });
+      this.juego.conElNombreDeLaBandaAdivinada((nombreDeLaBanda) =>
+        this.jugarAdivinando(nombreDeLaBanda)
+      );
     }
   }
 }
