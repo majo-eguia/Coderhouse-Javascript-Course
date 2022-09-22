@@ -56,7 +56,7 @@ export default class NotificadorPorDOM {
 
     const etiqueta = document.createElement("label");
     etiqueta.setAttribute("for", "nombre");
-    etiqueta.innerText = "Bienvenido, ¿cuál es su nombre?";
+    etiqueta.innerText = "Bienvenid@, ¿cuál es su nombre?";
 
     const input = document.createElement("input");
     input.setAttribute("id", "nombre");
@@ -74,14 +74,19 @@ export default class NotificadorPorDOM {
     this.main.appendChild(formulario);
   }
 
-  pasoLaRonda(ronda) {
+  ganoLaRonda(ronda) {
     this.parrafoParaNotificarSiAdivinoLaBanda.style.color = "green";
     this.parrafoParaNotificarSiAdivinoLaBanda.innerText = `Correcto, la canción es ${ronda.fragmentoDeCancion.nombreDeLaCancion}, de la banda ${ronda.fragmentoDeCancion.nombreDeLaBanda}. Pasaste la ronda ${ronda.numero}.`;
   }
 
   noAdivinoYLeQuedan(cantidadDeIntentosRestantes) {
     this.parrafoParaNotificarSiAdivinoLaBanda.style.color = "red";
-    this.parrafoParaNotificarSiAdivinoLaBanda.innerText = `Fallaste, pero no te rindas. Intentos restantes: ${cantidadDeIntentosRestantes}`;
+    this.parrafoParaNotificarSiAdivinoLaBanda.innerText = `Fallaste, pero no te rindas. Intentos restantes: ${cantidadDeIntentosRestantes}.`;
+  }
+
+  seResumeElJuego(numeroDeRonda, cantidadDeIntentosRestantes) {
+    this.parrafoParaNotificarSiAdivinoLaBanda.style.color = "blue";
+    this.parrafoParaNotificarSiAdivinoLaBanda.innerText = `Bienvenid@ de nuevo, te quedaste en la ronda ${numeroDeRonda}. Intentos restantes: ${cantidadDeIntentosRestantes}.`;
   }
 
   ganoElJuego(nombreDelJugador) {

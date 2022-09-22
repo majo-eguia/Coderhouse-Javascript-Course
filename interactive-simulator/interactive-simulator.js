@@ -31,5 +31,5 @@ notificadorPorDOM.conElNombreDelJugador((nombreDelJugador) => {
     notificadorPorDOM,
     sistemaDePersistencia
   );
-  juego.jugar();
+  juego.iniciar();
 });

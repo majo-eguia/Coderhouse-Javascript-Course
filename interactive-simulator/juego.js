@@ -13,6 +13,11 @@ export default class Juego {
     this.sistemaDePersistencia = sistemaDePersistencia;
     this.numeroDeRonda = 1;
     this.fuePerdido = false;
+    this.reiniciarCantidadDeIntentosEnRonda();
+  }
+
+  reiniciarCantidadDeIntentosEnRonda() {
+    this.cantidadDeIntentosEnRonda = 3;
   }
 
   presentar(fragmentoDeCancion) {
@@ -23,9 +28,10 @@ export default class Juego {
     this.notificador.conElNombreDeLaBandaAdivinada(funcion);
   }
 
-  pasoLaRonda(ronda) {
-    this.notificador.pasoLaRonda(ronda);
+  ganoLaRonda(ronda) {
+    this.notificador.ganoLaRonda(ronda);
     this.numeroDeRonda++;
+    this.reiniciarCantidadDeIntentosEnRonda();
     this.jugar();
   }
 
@@ -51,25 +57,64 @@ export default class Juego {
     );
   }
 
+  guardaElProgreso() {
+    this.guardaElProgresoRestando(this.cantidadDeIntentosEnRonda);
+  }
+
   eliminarElProgreso() {
     this.sistemaDePersistencia.eliminaElProgresoDe(this.nombreDelJugador);
   }
 
+  seTermino() {
+    this.eliminarElProgreso();
+  }
+
+  sePerdio() {
+    this.seTermino();
+    this.notificador.perdioElJuego(this.nombreDelJugador);
+  }
+
+  seGano() {
+    this.seTermino();
+    this.notificador.ganoElJuego(this.nombreDelJugador);
+  }
+
+  jugarRonda() {
+    const fragmentoDeCancion =
+      this.fragmentoDeCanciones[this.numeroDeRonda - 1];
+    const ronda = new Ronda(
+      this,
+      fragmentoDeCancion,
+      this.numeroDeRonda,
+      this.cantidadDeIntentosEnRonda
+    );
+    this.guardaElProgreso();
+    ronda.jugar();
+  }
+
   jugar() {
-    if (this.fuePerdido) {
-      this.eliminarElProgreso();
-      this.notificador.perdioElJuego(this.nombreDelJugador);
-    } else {
-      if (this.quedanRondasPorJugar()) {
-        const fragmentoDeCancion =
-          this.fragmentoDeCanciones[this.numeroDeRonda - 1];
-        const ronda = new Ronda(this, fragmentoDeCancion, this.numeroDeRonda);
-        this.guardaElProgresoRestando(ronda.cantidadDeIntentosRestantes);
-        ronda.jugar();
-      } else {
-        this.eliminarElProgreso();
-        this.notificador.ganoElJuego(this.nombreDelJugador);
-      }
-    }
+    this.fuePerdido
+      ? this.sePerdio()
+      : this.quedanRondasPorJugar()
+      ? this.jugarRonda()
+      : this.seGano();
+  }
+
+  resumirDesde({ numeroDeRonda, cantidadDeIntentosRestantes }) {
+    this.numeroDeRonda = numeroDeRonda;
+    this.cantidadDeIntentosEnRonda = cantidadDeIntentosRestantes;
+    this.notificador.seResumeElJuego(
+      numeroDeRonda,
+      cantidadDeIntentosRestantes
+    );
+    this.jugar();
+  }
+
+  iniciar() {
+    this.sistemaDePersistencia.progresoDe(
+      this.nombreDelJugador,
+      (progreso) => this.resumirDesde(progreso),
+      () => this.jugar()
+    );
   }
 }
