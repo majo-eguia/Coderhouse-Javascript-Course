@@ -18,15 +18,18 @@ canjear por distintos premios de diferente valor, o elegir quedarse con el diner
 import { fragmentoDeCanciones } from "./fragmento-de-canciones.js";
 import Juego from "./juego.js";
 import NotificadorPorDOM from "./notificador-por-dom.js";
+import SistemaDePersistenciaEnLocalStorage from "./sistema-de-persistencia-en-local-storage.js";
 
 // Inicia el juego
 
+const sistemaDePersistencia = new SistemaDePersistenciaEnLocalStorage();
 const notificadorPorDOM = new NotificadorPorDOM();
 notificadorPorDOM.conElNombreDelJugador((nombreDelJugador) => {
   const juego = new Juego(
     nombreDelJugador,
     fragmentoDeCanciones,
-    notificadorPorDOM
+    notificadorPorDOM,
+    sistemaDePersistencia
   );
   juego.jugar();
 });
