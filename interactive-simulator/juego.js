@@ -51,9 +51,13 @@ export default class Juego {
     );
   }
 
+  eliminarElProgreso() {
+    this.sistemaDePersistencia.eliminaElProgresoDe(this.nombreDelJugador);
+  }
+
   jugar() {
     if (this.fuePerdido) {
-      // eliminar el progreso
+      this.eliminarElProgreso();
       this.notificador.perdioElJuego(this.nombreDelJugador);
     } else {
       if (this.quedanRondasPorJugar()) {
@@ -63,7 +67,7 @@ export default class Juego {
         this.guardaElProgresoRestando(ronda.cantidadDeIntentosRestantes);
         ronda.jugar();
       } else {
-        //eliminar el progreso
+        this.eliminarElProgreso();
         this.notificador.ganoElJuego(this.nombreDelJugador);
       }
     }

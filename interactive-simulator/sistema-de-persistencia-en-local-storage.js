@@ -10,4 +10,8 @@ export default class SistemaDePersistenciaEnLocalStorage {
     };
     localStorage.setItem(nombreDelJugador, JSON.stringify(progresoDelJugador));
   }
+
+  eliminaElProgresoDe(nombreDelJugador) {
+    localStorage.removeItem(nombreDelJugador);
+  }
 }
