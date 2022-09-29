@@ -1,0 +1,16 @@
+body {
+    background-image: url(../interactive-simulator/img/rock_en_espanol.jpg);
+}
+
+
+.titulo {
+    color: rgb(247, 36, 142);
+    text-align: center;
+    font-family:'Times New Roman', Times, serif
+}
+
+.consigna {
+    color:  rgb(247, 36, 142);
+    text-align: center;
+
+}
