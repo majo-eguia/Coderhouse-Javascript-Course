@@ -11,9 +11,9 @@ export default class Ronda {
     return this.cantidadDeIntentosRestantes > 0;
   }
 
-  fueLaCancionCompuestaPorLaBandaLlamada(nombreDeLaBandaAdivinada) {
-    return this.fragmentoDeCancion.fueCompuestaPorLaBandaLlamada(
-      nombreDeLaBandaAdivinada
+  fueLaCancionCompuestaPorElArtistaDeNombre(nombreDelArtistaAdivinado) {
+    return this.fragmentoDeCancion.fueCompuestaPorELArtistaDeNombre(
+      nombreDelArtistaAdivinado
     );
   }
 
@@ -21,8 +21,8 @@ export default class Ronda {
     this.cantidadDeIntentosRestantes--;
   }
 
-  jugarAdivinando(nombreDeLaBanda) {
-    if (this.fueLaCancionCompuestaPorLaBandaLlamada(nombreDeLaBanda)) {
+  jugarAdivinando(nombreDelArtista) {
+    if (this.fueLaCancionCompuestaPorElArtistaDeNombre(nombreDelArtista)) {
       this.fueGanada = true;
       this.juego.ganoLaRonda(this);
     } else {
@@ -39,8 +39,8 @@ export default class Ronda {
   jugar() {
     if (this.leQuedanIntentos() && !this.fueGanada) {
       this.juego.presentar(this.fragmentoDeCancion);
-      this.juego.conElNombreDeLaBandaAdivinada((nombreDeLaBanda) =>
-        this.jugarAdivinando(nombreDeLaBanda)
+      this.juego.conElNombreDelArtistaAdivinado((nombreDelArtista) =>
+        this.jugarAdivinando(nombreDelArtista)
       );
     }
   }

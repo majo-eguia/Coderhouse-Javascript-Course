@@ -1,11 +1,11 @@
 export default class NotificadorPorDOM {
   constructor() {
     this.main = document.createElement("main");
-    this.parrafoParaNotificarSiAdivinoLaBanda = document.createElement("p");
+    this.parrafoParaNotificarSiAdivinoElArtista = document.createElement("p");
     this.encabezadoParaPresentarLaCancion = document.createElement("h3");
     this.parrafoDeFragmentoDeCancion = document.createElement("p");
 
-    this.main.appendChild(this.parrafoParaNotificarSiAdivinoLaBanda);
+    this.main.appendChild(this.parrafoParaNotificarSiAdivinoElArtista);
     this.main.appendChild(this.encabezadoParaPresentarLaCancion);
     this.main.appendChild(this.parrafoDeFragmentoDeCancion);
     document.body.appendChild(this.main);
@@ -18,7 +18,7 @@ export default class NotificadorPorDOM {
     this.parrafoDeFragmentoDeCancion.innerText = fragmentoDeCancion.letra;
   }
 
-  conElNombreDeLaBandaAdivinada(funcion) {
+  conElNombreDelArtistaAdivinado(funcion) {
     const formulario = document.createElement("form");
     formulario.onsubmit = (event) => {
       event.preventDefault();
@@ -30,7 +30,7 @@ export default class NotificadorPorDOM {
     const etiqueta = document.createElement("label");
     etiqueta.setAttribute("for", "nombre");
     etiqueta.style.color = "lightblue";
-    etiqueta.innerText = "¿Qué banda la compuso?";
+    etiqueta.innerText = "¿Qué artista la compuso?";
 
     const input = document.createElement("input");
     input.setAttribute("id", "nombre");
@@ -79,20 +79,20 @@ export default class NotificadorPorDOM {
   }
 
   ganoLaRonda(ronda) {
-    this.parrafoParaNotificarSiAdivinoLaBanda.style.color = "green";
-    this.parrafoParaNotificarSiAdivinoLaBanda.innerText = `Correcto, la canción es ${ronda.fragmentoDeCancion.nombreDeLaCancion}, de la banda ${ronda.fragmentoDeCancion.nombreDeLaBanda}. Pasaste la ronda ${ronda.numero}.`;
-    swal("¡Felicitaciones!", "Adivinaste el nombre de la banda", "success");
+    this.parrafoParaNotificarSiAdivinoElArtista.style.color = "green";
+    this.parrafoParaNotificarSiAdivinoElArtista.innerText = `Correcto, la canción es ${ronda.fragmentoDeCancion.nombreDeLaCancion}, compuesta por ${ronda.fragmentoDeCancion.nombreDelArtista}. Pasaste la ronda ${ronda.numero}.`;
+    swal("¡Felicitaciones!", "Adivinaste el nombre del artista", "success");
   }
 
   noAdivinoYLeQuedan(cantidadDeIntentosRestantes) {
-    this.parrafoParaNotificarSiAdivinoLaBanda.style.color = "red";
-    this.parrafoParaNotificarSiAdivinoLaBanda.innerText = `Fallaste, pero no te rindas. Intentos restantes: ${cantidadDeIntentosRestantes}.`;
+    this.parrafoParaNotificarSiAdivinoElArtista.style.color = "red";
+    this.parrafoParaNotificarSiAdivinoElArtista.innerText = `Fallaste, pero no te rindas. Intentos restantes: ${cantidadDeIntentosRestantes}.`;
     swal("¡Ups!", "Lo siento, no es correcto", "error");
   }
 
   seResumeElJuego(numeroDeRonda, cantidadDeIntentosRestantes) {
-    this.parrafoParaNotificarSiAdivinoLaBanda.style.color = "blue";
-    this.parrafoParaNotificarSiAdivinoLaBanda.innerText = `Bienvenid@ de nuevo, te quedaste en la ronda ${numeroDeRonda}. Intentos restantes: ${cantidadDeIntentosRestantes}.`;
+    this.parrafoParaNotificarSiAdivinoElArtista.style.color = "blue";
+    this.parrafoParaNotificarSiAdivinoElArtista.innerText = `Bienvenid@ de nuevo, te quedaste en la ronda ${numeroDeRonda}. Intentos restantes: ${cantidadDeIntentosRestantes}.`;
   }
 
   ganoElJuego(nombreDelJugador) {
@@ -115,7 +115,7 @@ export default class NotificadorPorDOM {
     resultadoDelJuego.style.color = colorDeTexto;
     this.encabezadoParaPresentarLaCancion.remove();
     this.parrafoDeFragmentoDeCancion.remove();
-    this.parrafoParaNotificarSiAdivinoLaBanda.remove();
+    this.parrafoParaNotificarSiAdivinoElArtista.remove();
     this.main.appendChild(resultadoDelJuego);
   }
 }

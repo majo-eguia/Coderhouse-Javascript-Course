@@ -24,8 +24,8 @@ export default class Juego {
     this.notificador.presentar(this.nombreDelJugador, fragmentoDeCancion);
   }
 
-  conElNombreDeLaBandaAdivinada(funcion) {
-    this.notificador.conElNombreDeLaBandaAdivinada(funcion);
+  conElNombreDelArtistaAdivinado(funcion) {
+    this.notificador.conElNombreDelArtistaAdivinado(funcion);
   }
 
   ganoLaRonda(ronda) {

@@ -1,11 +1,13 @@
 export default class FragmentoDeCancion {
-  constructor(letra, nombreDeLaCancion, nombreDeLaBanda) {
+  constructor(letra, nombreDeLaCancion, nombreDelArtista) {
     this.letra = letra;
     this.nombreDeLaCancion = nombreDeLaCancion;
-    this.nombreDeLaBanda = nombreDeLaBanda;
+    this.nombreDelArtista = nombreDelArtista;
   }
 
-  fueCompuestaPorLaBandaLlamada(nombreDeLaBanda) {
-    return this.nombreDeLaBanda.toLowerCase() === nombreDeLaBanda.toLowerCase();
+  fueCompuestaPorELArtistaDeNombre(nombreDelArtista) {
+    return (
+      this.nombreDelArtista.toLowerCase() === nombreDelArtista.toLowerCase()
+    );
   }
 }
