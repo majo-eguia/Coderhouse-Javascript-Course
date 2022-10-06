@@ -79,15 +79,24 @@ export default class NotificadorPorDOM {
   }
 
   ganoLaRonda(ronda) {
+    const cancion = ronda.cancion;
     this.parrafoParaNotificarSiAdivinoElArtista.style.color = "green";
-    this.parrafoParaNotificarSiAdivinoElArtista.innerText = `Correcto, la canción es ${ronda.cancion.nombre}, compuesta por ${ronda.cancion.nombreDelArtista}. Pasaste la ronda ${ronda.numero}.`;
-    swal("¡Felicitaciones!", "Adivinaste el nombre del artista", "success");
+    this.parrafoParaNotificarSiAdivinoElArtista.innerText = `Correcto, la canción es ${cancion.nombre}, compuesta por ${cancion.nombreDelArtista}. Pasaste la ronda ${ronda.numero}.`;
+    Swal.fire({
+      title: "¡Felicitaciones!",
+      text: "Adivinaste el nombre del artista",
+      icon: "success",
+    });
   }
 
   noAdivinoYLeQuedan(cantidadDeIntentosRestantes) {
     this.parrafoParaNotificarSiAdivinoElArtista.style.color = "red";
     this.parrafoParaNotificarSiAdivinoElArtista.innerText = `Fallaste, pero no te rindas. Intentos restantes: ${cantidadDeIntentosRestantes}.`;
-    swal("¡Ups!", "Lo siento, no es correcto", "error");
+    Swal.fire({
+      title: "¡Ups!",
+      text: "Lo siento, no es correcto",
+      icon: "error",
+    });
   }
 
   seResumeElJuego(numeroDeRonda, cantidadDeIntentosRestantes) {
