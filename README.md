@@ -7,7 +7,7 @@ ganarás cien mil pesos. ¿Empezamos?
 
 1. Clonar este repositorio
 
-2. Dentro de la carpeta interactive-simulator, crear un archivo config.js
+2. Dentro de la carpeta js, crear un archivo config.js
 
 3. Declarar en este archivo una variable de nombre RAPID_API_KEY
 
