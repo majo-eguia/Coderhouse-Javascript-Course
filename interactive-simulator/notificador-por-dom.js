@@ -1,3 +1,5 @@
+import { iframeDeSpotifyEnInnerHTML } from "./spotify/iframe-de-spotify.js";
+
 export default class NotificadorPorDOM {
   constructor() {
     this.main = document.createElement("main");
@@ -83,8 +85,8 @@ export default class NotificadorPorDOM {
     this.parrafoParaNotificarSiAdivinoElArtista.style.color = "green";
     this.parrafoParaNotificarSiAdivinoElArtista.innerText = `Correcto, la canción es ${cancion.nombre}, compuesta por ${cancion.nombreDelArtista}. Pasaste la ronda ${ronda.numero}.`;
     Swal.fire({
-      title: "¡Felicitaciones!",
-      text: "Adivinaste el nombre del artista",
+      title: `¡Felicitaciones, adivinaste el nombre del <a href="${cancion.urlDelArtista}" target="_blank">artista</a>!`,
+      html: iframeDeSpotifyEnInnerHTML(cancion.idDeSpotify),
       icon: "success",
     });
   }
