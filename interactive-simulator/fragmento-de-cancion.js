@@ -10,4 +10,8 @@ export default class FragmentoDeCancion {
       this.nombreDelArtista.toLowerCase() === nombreDelArtista.toLowerCase()
     );
   }
+
+  fragmentoDeLetraDe(cantidadDeLineas) {
+    return this.letra;
+  }
 }
