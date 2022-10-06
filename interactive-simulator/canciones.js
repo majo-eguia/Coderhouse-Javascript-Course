@@ -9,6 +9,7 @@ const obtenerCancionesDeAPI = async () => {
     ...(await proveeCanciones(2, "The Beatles")),
   ];
   localStorage.setItem("canciones", JSON.stringify(cancionesDeAPI));
+  return cancionesDeAPI;
 };
 
 const obtenerCancionesDesdeJSON = (cancionesEnJSON) => {
