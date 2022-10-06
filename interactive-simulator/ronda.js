@@ -1,7 +1,7 @@
 export default class Ronda {
-  constructor(juego, fragmentoDeCancion, numero, cantidadDeIntentos) {
+  constructor(juego, cancion, numero, cantidadDeIntentos) {
     this.juego = juego;
-    this.fragmentoDeCancion = fragmentoDeCancion;
+    this.cancion = cancion;
     this.numero = numero;
     this.cantidadDeIntentosRestantes = cantidadDeIntentos;
     this.fueGanada = false;
@@ -12,7 +12,7 @@ export default class Ronda {
   }
 
   fueLaCancionCompuestaPorElArtistaDeNombre(nombreDelArtistaAdivinado) {
-    return this.fragmentoDeCancion.fueCompuestaPorELArtistaDeNombre(
+    return this.cancion.fueCompuestaPorELArtistaDeNombre(
       nombreDelArtistaAdivinado
     );
   }
@@ -38,7 +38,7 @@ export default class Ronda {
 
   jugar() {
     if (this.leQuedanIntentos() && !this.fueGanada) {
-      this.juego.presentar(this.fragmentoDeCancion);
+      this.juego.presentar(this.cancion);
       this.juego.conElNombreDelArtistaAdivinado((nombreDelArtista) =>
         this.jugarAdivinando(nombreDelArtista)
       );

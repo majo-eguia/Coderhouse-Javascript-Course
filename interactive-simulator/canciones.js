@@ -87,7 +87,7 @@ const fragmentoDeCancion8 = new FragmentoDeCancion(
   "The Beatles"
 );
 
-export const fragmentoDeCanciones = [
+export const canciones = [
   fragmentoDeCancion1,
   fragmentoDeCancion2,
   fragmentoDeCancion3,

@@ -15,7 +15,7 @@ Cada vez que acierte, el participante sumará una cierta suma de dinero, la cual
 canjear por distintos premios de diferente valor, o elegir quedarse con el dinero.
 */
 
-import { fragmentoDeCanciones } from "./fragmento-de-canciones.js";
+import { canciones } from "./canciones.js";
 import Juego from "./juego.js";
 import NotificadorPorDOM from "./notificador-por-dom.js";
 import SistemaDePersistenciaEnLocalStorage from "./sistema-de-persistencia-en-local-storage.js";
@@ -27,7 +27,7 @@ const notificadorPorDOM = new NotificadorPorDOM();
 notificadorPorDOM.conElNombreDelJugador((nombreDelJugador) => {
   const juego = new Juego(
     nombreDelJugador,
-    fragmentoDeCanciones,
+    canciones,
     notificadorPorDOM,
     sistemaDePersistencia
   );

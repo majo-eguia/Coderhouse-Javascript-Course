@@ -1,14 +1,9 @@
 import Ronda from "./ronda.js";
 
 export default class Juego {
-  constructor(
-    nombreDelJugador,
-    fragmentoDeCanciones,
-    notificador,
-    sistemaDePersistencia
-  ) {
+  constructor(nombreDelJugador, canciones, notificador, sistemaDePersistencia) {
     this.nombreDelJugador = nombreDelJugador;
-    this.fragmentoDeCanciones = fragmentoDeCanciones;
+    this.canciones = canciones;
     this.notificador = notificador;
     this.sistemaDePersistencia = sistemaDePersistencia;
     this.numeroDeRonda = 1;
@@ -20,8 +15,8 @@ export default class Juego {
     this.cantidadDeIntentosEnRonda = 3;
   }
 
-  presentar(fragmentoDeCancion) {
-    this.notificador.presentar(this.nombreDelJugador, fragmentoDeCancion);
+  presentar(cancion) {
+    this.notificador.presentar(this.nombreDelJugador, cancion);
   }
 
   conElNombreDelArtistaAdivinado(funcion) {
@@ -46,7 +41,7 @@ export default class Juego {
   }
 
   quedanRondasPorJugar() {
-    return this.numeroDeRonda <= this.fragmentoDeCanciones.length;
+    return this.numeroDeRonda <= this.canciones.length;
   }
 
   guardaElProgresoRestando(cantidadDeIntentosRestantes) {
@@ -80,11 +75,10 @@ export default class Juego {
   }
 
   jugarRonda() {
-    const fragmentoDeCancion =
-      this.fragmentoDeCanciones[this.numeroDeRonda - 1];
+    const cancion = this.canciones[this.numeroDeRonda - 1];
     const ronda = new Ronda(
       this,
-      fragmentoDeCancion,
+      cancion,
       this.numeroDeRonda,
       this.cantidadDeIntentosEnRonda
     );

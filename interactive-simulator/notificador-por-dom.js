@@ -3,21 +3,19 @@ export default class NotificadorPorDOM {
     this.main = document.createElement("main");
     this.parrafoParaNotificarSiAdivinoElArtista = document.createElement("p");
     this.encabezadoParaPresentarLaCancion = document.createElement("h3");
-    this.parrafoDeFragmentoDeCancion = document.createElement("p");
+    this.parrafoDeCancion = document.createElement("p");
 
     this.main.appendChild(this.parrafoParaNotificarSiAdivinoElArtista);
     this.main.appendChild(this.encabezadoParaPresentarLaCancion);
-    this.main.appendChild(this.parrafoDeFragmentoDeCancion);
+    this.main.appendChild(this.parrafoDeCancion);
     document.body.appendChild(this.main);
   }
 
-  presentar(nombreDelJugador, fragmentoDeCancion) {
-    this.parrafoDeFragmentoDeCancion.style.color = "green";
+  presentar(nombreDelJugador, cancion) {
+    this.parrafoDeCancion.style.color = "green";
     this.encabezadoParaPresentarLaCancion.style.color = "lightblue";
     this.encabezadoParaPresentarLaCancion.innerText = `${nombreDelJugador}, esta es tu canción a adivinar...`;
-    this.parrafoDeFragmentoDeCancion.innerText = fragmentoDeCancion
-      .fragmentoDeLetraDe(4)
-      .join("\n");
+    this.parrafoDeCancion.innerText = cancion.fragmentoDeLetraDe(4).join("\n");
   }
 
   conElNombreDelArtistaAdivinado(funcion) {
@@ -82,7 +80,7 @@ export default class NotificadorPorDOM {
 
   ganoLaRonda(ronda) {
     this.parrafoParaNotificarSiAdivinoElArtista.style.color = "green";
-    this.parrafoParaNotificarSiAdivinoElArtista.innerText = `Correcto, la canción es ${ronda.fragmentoDeCancion.nombre}, compuesta por ${ronda.fragmentoDeCancion.nombreDelArtista}. Pasaste la ronda ${ronda.numero}.`;
+    this.parrafoParaNotificarSiAdivinoElArtista.innerText = `Correcto, la canción es ${ronda.cancion.nombre}, compuesta por ${ronda.cancion.nombreDelArtista}. Pasaste la ronda ${ronda.numero}.`;
     swal("¡Felicitaciones!", "Adivinaste el nombre del artista", "success");
   }
 
@@ -116,7 +114,7 @@ export default class NotificadorPorDOM {
     resultadoDelJuego.innerText = resultado;
     resultadoDelJuego.style.color = colorDeTexto;
     this.encabezadoParaPresentarLaCancion.remove();
-    this.parrafoDeFragmentoDeCancion.remove();
+    this.parrafoDeCancion.remove();
     this.parrafoParaNotificarSiAdivinoElArtista.remove();
     this.main.appendChild(resultadoDelJuego);
   }
