@@ -1,7 +1,7 @@
 export default class FragmentoDeCancion {
-  constructor(letra, nombreDeLaCancion, nombreDelArtista) {
+  constructor(letra, nombre, nombreDelArtista) {
     this.letra = letra;
-    this.nombreDeLaCancion = nombreDeLaCancion;
+    this.nombre = nombre;
     this.nombreDelArtista = nombreDelArtista;
   }
 

@@ -80,7 +80,7 @@ export default class NotificadorPorDOM {
 
   ganoLaRonda(ronda) {
     this.parrafoParaNotificarSiAdivinoElArtista.style.color = "green";
-    this.parrafoParaNotificarSiAdivinoElArtista.innerText = `Correcto, la canción es ${ronda.fragmentoDeCancion.nombreDeLaCancion}, compuesta por ${ronda.fragmentoDeCancion.nombreDelArtista}. Pasaste la ronda ${ronda.numero}.`;
+    this.parrafoParaNotificarSiAdivinoElArtista.innerText = `Correcto, la canción es ${ronda.fragmentoDeCancion.nombre}, compuesta por ${ronda.fragmentoDeCancion.nombreDelArtista}. Pasaste la ronda ${ronda.numero}.`;
     swal("¡Felicitaciones!", "Adivinaste el nombre del artista", "success");
   }
 
