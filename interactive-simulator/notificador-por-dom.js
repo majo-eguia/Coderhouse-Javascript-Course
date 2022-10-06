@@ -15,7 +15,8 @@ export default class NotificadorPorDOM {
     this.parrafoDeFragmentoDeCancion.style.color = "green";
     this.encabezadoParaPresentarLaCancion.style.color = "lightblue";
     this.encabezadoParaPresentarLaCancion.innerText = `${nombreDelJugador}, esta es tu canción a adivinar...`;
-    this.parrafoDeFragmentoDeCancion.innerText = fragmentoDeCancion.letra;
+    this.parrafoDeFragmentoDeCancion.innerText =
+      fragmentoDeCancion.letra.join("\n");
   }
 
   conElNombreDelArtistaAdivinado(funcion) {
